@@ -6,12 +6,20 @@ enum ActionKind {
 namespace SpriteKind {
     export const gap = SpriteKind.create()
 }
+controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.vy = -100
+    animation.setAction(mySprite, ActionKind.Walking)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
+	
+})
 let projectile: Sprite = null
 let Gap_sprite: Sprite = null
 let gap_bilde: Image = null
 let bunn_buildet: Image = null
 let top_buildet: Image = null
 let gap = 0
+let mySprite: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -136,7 +144,7 @@ scene.setBackgroundImage(img`
     `)
 info.setScore(0)
 effects.clouds.startScreenEffect()
-let mySprite = sprites.create(img`
+mySprite = sprites.create(img`
     . . . . . . . . . . b 5 b . . . 
     . . . . . . . . . b 5 b . . . . 
     . . . . . . . . . b c . . . . . 
@@ -270,7 +278,7 @@ game.onUpdate(function () {
         animation.setAction(mySprite, ActionKind.Walking)
     }
     if (mySprite.top > 120 || mySprite.bottom < 0) {
-    	
+        game.over(false)
     }
 })
 game.onUpdateInterval(1500, function () {
